@@ -49,23 +49,19 @@ exports.registerStudent = async (req, res) => {
       paymentStatus: "pending"
     });
 
-    // Don't let email crash registration
-    try {
-      await sendEmail(
+  
+
+    res.status(201).json({
+      message: "Registration successful",
+      student
+    });
+    sendEmail(
         email,
         "Bootcamp Registration Successful",
         `<h3>Hello ${fullName},</h3>
         <p>Congartulations on your registrations for the bootcamp. Your registration was successful</p>
          `
       );
-    } catch (err) {
-      console.log("Email failed:", err.message);
-    }
-
-    res.status(201).json({
-      message: "Registration successful",
-      student
-    });
 
   } catch (error) {
     console.log(error);

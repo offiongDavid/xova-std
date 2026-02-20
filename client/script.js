@@ -8,6 +8,7 @@ form.addEventListener("submit", async function (e) {
   submitBtn.disabled = true;
   const originalText = submitBtn.innerText;
   submitBtn.innerText = "Processing...";
+ 
 
   const data = {
     fullName: document.getElementById("name").value.trim(),
