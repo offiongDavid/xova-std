@@ -20,6 +20,10 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/admin.html'));
 });
 
+app.get("/admin-login", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/admin-login.html"));
+});
+
 // For index page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/index.html'));
