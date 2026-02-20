@@ -13,22 +13,20 @@ connectDB();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, "../client")));
 
-// For admin routes if using HTML files
-app.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/admin.html'));
+// Routes for pages
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/index.html"));
 });
 
 app.get("/admin-login", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/admin-login.html"));
+  res.sendFile(path.join(__dirname, "../client/admin-login.html"));
 });
 
-// For index page
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/index.html'));
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/admin.html"));
 });
-
 app.use("/api", paymentRoutes);
 app.use("/api/admin", adminRoutes);
 
