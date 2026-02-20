@@ -1,22 +1,38 @@
 const form = document.getElementById("registrationForm");
+const submitBtn = form.querySelector("button[type='submit']");
 
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
+  // Disable button and show loading
+  submitBtn.disabled = true;
+  const originalText = submitBtn.innerText;
+  submitBtn.innerText = "Processing...";
+
   const data = {
-    fullName: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    phone: document.getElementById("phone").value,
-    address: document.getElementById("address").value,
-    state: document.getElementById("state").value,
-    age: document.getElementById("age").value,
+    fullName: document.getElementById("name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    address: document.getElementById("address").value.trim(),
+    state: document.getElementById("state").value.trim(),
+    age: document.getElementById("age").value.trim(),
     gender: document.getElementById("gender").value,
-    occupation: document.getElementById("occupation").value,
+    occupation: document.getElementById("occupation").value.trim(),
     educationLevel: document.getElementById("educationLevel").value,
     hasLaptop: document.getElementById("hasLaptop").value,
     priorTechExperience: document.getElementById("priorTechExperience").value,
     track: document.getElementById("trackFilter").value,
   };
+
+  // Check all required fields before sending
+  for (let key in data) {
+    if (!data[key]) {
+      alert("Please fill all fields before submitting");
+      submitBtn.disabled = false;
+      submitBtn.innerText = originalText;
+      return;
+    }
+  }
 
   try {
     const response = await fetch("/api/register", {
@@ -29,6 +45,8 @@ form.addEventListener("submit", async function (e) {
 
     if (!response.ok) {
       alert(result.message);
+      submitBtn.disabled = false;
+      submitBtn.innerText = originalText;
       return;
     }
 
@@ -57,13 +75,16 @@ form.addEventListener("submit", async function (e) {
 
       onClose: function () {
         alert("Payment window closed.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = originalText;
       },
     });
 
     handler.openIframe();
-
   } catch (error) {
     console.error(error);
-    alert("Something went wrong.");
+    alert("Something went wrong. Please try again.");
+    submitBtn.disabled = false;
+    submitBtn.innerText = originalText;
   }
 });
