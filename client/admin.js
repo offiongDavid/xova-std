@@ -115,17 +115,35 @@ function updateStats(users) {
 }
 
 async function deleteUser(id) {
-  if (!confirm('Are you sure you want to delete this user?')) return;
-
   const token = localStorage.getItem("adminToken");
-  await fetch(`/api/users/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
 
-  fetchUsers(filter.value);
+  if (!token) {
+    alert("You are not logged in.");
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/users/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      alert(result.message || "Unauthorized");
+      return;
+    }
+
+    alert("User deleted successfully!");
+    window.location.reload();
+
+  } catch (error) {
+    console.error("Delete error:", error);
+  }
 }
 
 filter.addEventListener('change', (e) => {
