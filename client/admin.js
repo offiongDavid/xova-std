@@ -56,14 +56,14 @@ function renderTable(users) {
         <td class="p-4">${user.fullName}</td>
         <td class="p-4">${user.email}</td>
         <td class="p-4">${user.phone}</td>
-        <td>${user.address}</td>
-<td>${user.state}</td>
-<td>${user.age}</td>
-<td>${user.gender}</td>
-<td>${user.occupation}</td>
-<td>${user.educationLevel}</td>
-<td>${user.hasLaptop}</td>
-<td>${user.priorTechExperience}</td>
+        <td class="p-4">${user.address}</td>
+<td class="p-4">${user.state}</td>
+<td class="p-4">${user.age}</td>
+<td class="p-4">${user.gender}</td>
+<td class="p-4">${user.occupation}</td>
+<td class="p-4">${user.educationLevel}</td>
+<td class="p-4">${user.hasLaptop}</td>
+<td class="p-4">${user.priorTechExperience}</td>
         <td class="p-4">${user.track}</td>
         <td class="p-4">${statusBadge}</td>
         <td class="p-4">${new Date(user.createdAt).toLocaleDateString()}</td>
@@ -100,9 +100,9 @@ function animateValue(element, end) {
 
 function updateStats(users) {
   const total = users.length;
- const paid = users.filter(
-  (u) => u.paymentStatus && u.paymentStatus.toLowerCase() === 'paid'
-).length;
+  const paid = users.filter(
+    (u) => u.paymentStatus && u.paymentStatus.toLowerCase() === 'paid'
+  ).length;
   const pending = users.filter(
     (u) => u.paymentStatus.toLowerCase() === 'pending'
   ).length;
@@ -117,8 +117,12 @@ function updateStats(users) {
 async function deleteUser(id) {
   if (!confirm('Are you sure you want to delete this user?')) return;
 
-  await fetch(`${API_URL}/users/${id}`, {
+  const token = localStorage.getItem("adminToken");
+  await fetch(`/api/users/${id}`, {
     method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   fetchUsers(filter.value);
@@ -152,7 +156,22 @@ function exportCSV() {
     .then((res) => res.json())
     .then((users) => {
       const csv = [
-        ['Full Name', 'Email', 'Phone', "Address", "State", "Age", "Gender", "Occupation", "Education", "Laptop", "Tech Experience", 'Track', 'Status', 'Date'],
+        [
+          'Full Name',
+          'Email',
+          'Phone',
+          'Address',
+          'State',
+          'Age',
+          'Gender',
+          'Occupation',
+          'Education',
+          'Laptop',
+          'Tech Experience',
+          'Track',
+          'Status',
+          'Date',
+        ],
         ...users.map((u) => [
           u.fullName,
           u.email,
