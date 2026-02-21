@@ -169,16 +169,32 @@ searchInput.addEventListener('input', () => {
 // csv
 function exportCSV() {
   const token = localStorage.getItem("token");
+
   if (!token) {
     alert("You are not logged in.");
     return;
   }
 
   fetch(`${API_URL}/users`, {
-   "Authorization": `Bearer ${token}`,
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Unauthorized");
+      }
+      return res.json();
+    })
     .then((users) => {
+
+      if (!Array.isArray(users)) {
+        alert("Failed to fetch users.");
+        return;
+      }
+
       const csv = [
         [
           'Full Name',
@@ -219,6 +235,10 @@ function exportCSV() {
       link.href = URL.createObjectURL(blob);
       link.download = 'students.csv';
       link.click();
+    })
+    .catch((err) => {
+      alert("Unauthorized. Please login again.");
+      console.error(err);
     });
 }
 
