@@ -26,7 +26,7 @@ async function fetchUsers(track = '') {
 
   const res = await fetch(url, {
     headers: {
-      Authorization: token,
+      "Authorization": `Bearer ${token}`,
     },
   });
 
