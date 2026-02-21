@@ -115,7 +115,7 @@ function updateStats(users) {
 }
 
 async function deleteUser(id) {
-  const token = localStorage.getItem("adminToken");
+  const token = localStorage.getItem("token"); // FIXED
 
   if (!token) {
     alert("You are not logged in.");
