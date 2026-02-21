@@ -168,8 +168,14 @@ searchInput.addEventListener('input', () => {
 
 // csv
 function exportCSV() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("You are not logged in.");
+    return;
+  }
+
   fetch(`${API_URL}/users`, {
-    headers: { Authorization: localStorage.getItem('token') },
+   "Authorization": `Bearer ${token}`,
   })
     .then((res) => res.json())
     .then((users) => {
