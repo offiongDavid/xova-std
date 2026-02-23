@@ -65,6 +65,7 @@ function renderTable(users) {
 <td class="p-4">${user.hasLaptop}</td>
 <td class="p-4">${user.priorTechExperience}</td>
         <td class="p-4">${user.track}</td>
+        <td class="p-4">${user.classSchedule}</td>
         <td class="p-4">${statusBadge}</td>
         <td class="p-4">${new Date(user.createdAt).toLocaleDateString()}</td>
         <td class="p-4">
@@ -209,6 +210,7 @@ function exportCSV() {
           'Laptop',
           'Tech Experience',
           'Track',
+          'Class Schedule',
           'Status',
           'Date',
         ],
@@ -225,6 +227,7 @@ function exportCSV() {
           u.hasLaptop,
           u.priorTechExperience,
           u.track,
+          u.classSchedule,
           u.paymentStatus,
           new Date(u.createdAt).toLocaleDateString(),
         ]),

@@ -12,6 +12,7 @@ const studentSchema = new mongoose.Schema({
   educationLevel: { type: String, required: true },
   hasLaptop: { type: String, required: true }, // "Yes" or "No"
   priorTechExperience: { type: String, required: true }, // "Yes" or "No"
+  classSchedule: { type: String, enum: ["Online Class", "Physical Class"], required: true },
   track: {
     type: String,
     enum: ["Web Development", "Web Design","Graphic Design","UI/UX"],

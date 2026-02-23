@@ -23,6 +23,7 @@ form.addEventListener("submit", async function (e) {
     hasLaptop: document.getElementById("hasLaptop").value,
     priorTechExperience: document.getElementById("priorTechExperience").value,
     track: document.getElementById("trackFilter").value,
+    classSchedule: document.getElementById("classSchedule").value,
   };
 
   // Check all required fields before sending

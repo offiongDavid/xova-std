@@ -9,6 +9,7 @@ exports.registerStudent = async (req, res) => {
       email,
       phone,
       track,
+      classSchedule,
       address,
       state,
       age,
@@ -20,7 +21,7 @@ exports.registerStudent = async (req, res) => {
     } = req.body;
 
     if (
-      !fullName || !email || !phone || !track ||
+      !fullName || !email || !phone || !track || !classSchedule ||
       !address || !state || !age || !gender ||
       !occupation || !educationLevel ||
       !hasLaptop || !priorTechExperience
@@ -38,6 +39,7 @@ exports.registerStudent = async (req, res) => {
       email,
       phone,
       track,
+      classSchedule,
       address,
       state,
       age,
@@ -73,7 +75,7 @@ exports.getAllUsers = async (req, res) => {
   try {
     const users = await Student.find()
       .select(
-        'fullName email phone address state age gender occupation educationLevel hasLaptop priorTechExperience track paymentStatus createdAt paymentReference'
+        'fullName email phone address state age gender occupation educationLevel hasLaptop priorTechExperience track classSchedule paymentStatus createdAt paymentReference'
       )
       .sort({ createdAt: -1 });
 
@@ -89,7 +91,7 @@ exports.getUsersByTrack = async (req, res) => {
     const { track } = req.params;
 
     const users = await Student.find({ track })
-      .select('fullName email phone address state age gender occupation educationLevel hasLaptop priorTechExperience track paymentStatus createdAt paymentReference')
+      .select('fullName email phone address state age gender occupation educationLevel hasLaptop priorTechExperience track classSchedule paymentStatus createdAt paymentReference')
       .sort({ createdAt: -1 });
 
     res.json(users);
